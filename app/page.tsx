@@ -1,101 +1,124 @@
-import Image from "next/image";
+import type { Metadata } from 'next';
+import WheelPageClient from '@/components/WheelPageClient';
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: 'Spin the Wheel | Free Random Picker',
+  description: 'Free spin the wheel tool. Add names, spin, get a random result. No signup needed. Share your wheel with a link.',
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'How do I use the spin the wheel tool?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Simply add your items in the panel on the right, then click the SPIN button. The wheel will spin and land on a random winner.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I share my wheel with others?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes! Click "Copy share link" to copy a URL that includes all your items. Anyone who opens the link will see the same wheel.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is this tool free to use?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Completely free. No account or signup required.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I embed the wheel on my website?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Click "Get embed code" to get an iframe snippet you can paste into any website.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Are the results truly random?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. The wheel uses JavaScript\'s Math.random(), which is seeded from system entropy, making the results unpredictable and fair.',
+      },
+    },
+  ],
+};
+
+export default function HomePage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col gap-12">
+        {/* Hero */}
+        <div className="text-center">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-3 leading-tight">
+            Spin the Wheel{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
+              — Free Random Picker
+            </span>
+          </h1>
+          <p className="text-slate-400 text-lg max-w-xl mx-auto">
+            Add any items, spin the wheel, and let fate decide. Perfect for picking names, teams, prizes, and more.
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* Wheel + Controls */}
+        <WheelPageClient />
+
+        {/* How it works description (SEO) */}
+        <section className="max-w-2xl mx-auto text-center">
+          <h2 className="text-xl font-bold text-white mb-3">What is Spin the Wheel?</h2>
+          <p className="text-slate-400 leading-relaxed">
+            WheelSpinner is a free online spin-the-wheel tool that lets you pick a random item from any list.
+            Add names, options, prizes, or anything else — then spin for a fair, random result. No software to install,
+            no account required. Share your custom wheel with a unique link, or embed it on your own website.
+          </p>
+        </section>
+
+        {/* FAQ */}
+        <section className="max-w-2xl mx-auto w-full">
+          <h2 className="text-xl font-bold text-white mb-6 text-center">Frequently Asked Questions</h2>
+          <div className="flex flex-col gap-4">
+            {faqSchema.mainEntity.map((item, i) => (
+              <div
+                key={i}
+                className="bg-slate-900/60 border border-slate-800 rounded-xl p-5"
+                itemScope
+                itemType="https://schema.org/Question"
+              >
+                <h3
+                  className="text-white font-semibold mb-2"
+                  itemProp="name"
+                >
+                  {item.name}
+                </h3>
+                <div
+                  itemScope
+                  itemType="https://schema.org/Answer"
+                  itemProp="acceptedAnswer"
+                >
+                  <p className="text-slate-400 text-sm leading-relaxed" itemProp="text">
+                    {item.acceptedAnswer.text}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </>
   );
 }
