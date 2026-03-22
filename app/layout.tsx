@@ -17,6 +17,11 @@ export const metadata: Metadata = {
     siteName: 'WheelSpinner',
     type: 'website',
   },
+  verification: {
+    other: {
+      'google-adsense-account': 'ca-pub-6341544256514308',
+    },
+  },
 };
 
 export default function RootLayout({
