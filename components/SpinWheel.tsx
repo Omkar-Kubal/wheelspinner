@@ -81,7 +81,30 @@ const SpinWheel = forwardRef<SpinWheelHandle, SpinWheelProps>(function SpinWheel
     saveImage: () => {
       const canvas = canvasRef.current
       if (!canvas) return
-      const dataUrl = canvas.toDataURL("image/png")
+
+      // Create offscreen canvas with white background + watermark
+      const offscreen = document.createElement("canvas")
+      offscreen.width = canvas.width
+      offscreen.height = canvas.height
+      const ctx = offscreen.getContext("2d")
+      if (!ctx) return
+
+      // White background (prevents transparent PNG)
+      ctx.fillStyle = "white"
+      ctx.fillRect(0, 0, offscreen.width, offscreen.height)
+
+      // Copy the wheel
+      ctx.drawImage(canvas, 0, 0)
+
+      // Watermark bottom-right (scaled for device pixel ratio)
+      const dpr = window.devicePixelRatio || 1
+      ctx.font = `${12 * dpr}px system-ui, sans-serif`
+      ctx.fillStyle = "rgba(160, 160, 160, 0.9)"
+      ctx.textAlign = "right"
+      ctx.textBaseline = "bottom"
+      ctx.fillText("wheelspinner.app", offscreen.width - 8 * dpr, offscreen.height - 8 * dpr)
+
+      const dataUrl = offscreen.toDataURL("image/png")
       const a = document.createElement("a")
       a.href = dataUrl
       a.download = `wheel-${Date.now()}.png`

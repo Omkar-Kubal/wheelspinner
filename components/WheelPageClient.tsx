@@ -5,6 +5,7 @@ import confetti from 'canvas-confetti';
 import SpinWheel, { SpinWheelHandle } from '@/components/SpinWheel';
 import WheelControls from '@/components/WheelControls';
 import ResultModal from '@/components/ResultModal';
+import ChampionModal from '@/components/ChampionModal';
 import Toast from '@/components/Toast';
 import { WheelTheme, THEMES, DEFAULT_THEME } from '@/lib/themes';
 import { playWinSound } from '@/lib/sounds';
@@ -51,6 +52,10 @@ export default function WheelPageClient({ defaultItems }: WheelPageClientProps) 
   const [eliminateMode, setEliminateMode] = useState(false);
   const [originalItems, setOriginalItems] = useState<string[]>([]);
   const [isChampion, setIsChampion] = useState(false);
+  const [spinCounter, setSpinCounter] = useState(0);
+
+  // Tab title ref
+  const originalTitleRef = useRef<string>('');
 
   // Fullscreen
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -132,6 +137,34 @@ export default function WheelPageClient({ defaultItems }: WheelPageClientProps) 
     return () => document.removeEventListener('fullscreenchange', handleFSChange);
   }, []);
 
+  // Store original title on mount
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      originalTitleRef.current = document.title;
+    }
+  }, []);
+
+  // Update tab title based on modal state
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    if (!modalOpen || !winner) {
+      document.title = 'Spin the Wheel — Free Random Picker';
+      return;
+    }
+    if (isChampion) {
+      document.title = `🏆 ${winner} is Champion! — WheelSpinner`;
+    } else {
+      document.title = `🎉 ${winner} won! — WheelSpinner`;
+    }
+  }, [modalOpen, isChampion, winner]);
+
+  // Keep originalItems in sync when eliminate mode is OFF
+  useEffect(() => {
+    if (!eliminateMode) {
+      setOriginalItems([...items]);
+    }
+  }, [items, eliminateMode]);
+
   const showToast = useCallback((msg: string) => {
     setToastMessage(msg);
     setToastVisible(true);
@@ -168,13 +201,12 @@ export default function WheelPageClient({ defaultItems }: WheelPageClientProps) 
 
       if (champion) {
         setIsChampion(true);
-        confetti({
-          particleCount: 250,
-          spread: 100,
-          origin: { y: 0.5 },
-          colors: ['#f9ca24', '#f0932b', '#ffdd59', '#ffffff'],
-        });
+        setSpinCounter((c) => c + 1);
+        // Confetti is fired by ChampionModal on mount
       } else {
+        if (eliminateMode) {
+          setSpinCounter((c) => c + 1);
+        }
         confetti({
           particleCount: 180,
           spread: 80,
@@ -233,11 +265,12 @@ export default function WheelPageClient({ defaultItems }: WheelPageClientProps) 
     setSpinKey((k) => k + 1);
   }, [winner]);
 
-  const handleStartOver = useCallback(() => {
+  const handlePlayAgain = useCallback(() => {
     setItems(originalItems);
     setModalOpen(false);
     setWinner(null);
     setIsChampion(false);
+    setSpinCounter(0);
     setSpinKey((k) => k + 1);
   }, [originalItems]);
 
@@ -245,6 +278,7 @@ export default function WheelPageClient({ defaultItems }: WheelPageClientProps) 
     (val: boolean) => {
       if (val) {
         setOriginalItems([...items]);
+        setSpinCounter(0);
       }
       setEliminateMode(val);
     },
@@ -405,14 +439,20 @@ export default function WheelPageClient({ defaultItems }: WheelPageClientProps) 
         </div>
       </div>
 
-      {modalOpen && (
+      {modalOpen && isChampion && winner && (
+        <ChampionModal
+          winner={winner}
+          roundsPlayed={spinCounter}
+          onPlayAgain={handlePlayAgain}
+          onClose={handlePlayAgain}
+        />
+      )}
+      {modalOpen && !isChampion && (
         <ResultModal
           winner={winner}
           onClose={handleClose}
           onSpinAgain={handleSpinAgain}
           onRemoveAndSpin={handleRemoveAndSpin}
-          isChampion={isChampion}
-          onStartOver={handleStartOver}
         />
       )}
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 
 interface NamesPanelProps {
   items: string[]
@@ -42,6 +42,20 @@ export default function WheelControls({
 }: NamesPanelProps) {
   const [inputValue, setInputValue] = useState("")
   const [copied, setCopied] = useState(false)
+  const [newItemName, setNewItemName] = useState<string | null>(null)
+  const [badgePopping, setBadgePopping] = useState(false)
+  const prevLengthRef = useRef(0)
+
+  // Detect item additions and trigger badge pop
+  useEffect(() => {
+    if (items.length > prevLengthRef.current) {
+      setBadgePopping(true)
+      const timer = setTimeout(() => setBadgePopping(false), 300)
+      prevLengthRef.current = items.length
+      return () => clearTimeout(timer)
+    }
+    prevLengthRef.current = items.length
+  }, [items.length])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -49,6 +63,8 @@ export default function WheelControls({
     if (trimmedValue) {
       onAddName(trimmedValue)
       setInputValue("")
+      setNewItemName(trimmedValue)
+      setTimeout(() => setNewItemName(null), 300)
     }
   }
 
@@ -71,7 +87,10 @@ export default function WheelControls({
       <div className="px-5 py-3 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-100 flex-shrink-0">
         <h2 className="text-base font-semibold text-gray-800 flex items-center gap-2 m-0">
           Wheel Items
-          <span className="ml-auto text-sm font-medium text-gray-500 bg-white px-2 py-0.5 rounded-full shadow-sm border border-gray-100">
+          <span
+            className={`ml-auto text-sm font-medium text-gray-500 bg-white px-2 py-0.5 rounded-full shadow-sm border border-gray-100 ${badgePopping ? "badge-pop" : ""}`}
+            style={{ display: "inline-block" }}
+          >
             {items.length}
           </span>
         </h2>
@@ -129,8 +148,11 @@ export default function WheelControls({
           <ul className="divide-y divide-gray-50 m-0 p-0 text-left">
             {items.map((name, index) => (
               <li
-                key={index}
+                key={`${name}-${index}`}
                 className="flex items-center justify-between px-4 py-2.5 hover:bg-gray-50 transition-colors group"
+                style={name === newItemName && index === items.length - 1
+                  ? { animation: "itemSlideIn 0.25s ease-out forwards" }
+                  : undefined}
               >
                 <div className="flex items-center gap-3 overflow-hidden">
                   <span
