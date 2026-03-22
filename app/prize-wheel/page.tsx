@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: 'Free online prize wheel spinner. Add your prizes, spin, and award a winner. No signup needed.',
 };
 
-const ITEMS = ['Prize 1', 'Prize 2', 'Prize 3', 'No prize', 'Try again'];
+const ITEMS = ['Prize 1', 'Prize 2', 'Prize 3', 'No prize', 'Try again', 'Bonus!'];
 const FAQS = [
   { q: 'What can I use a prize wheel for?', a: 'Prize wheels are great for giveaways, promotions, trade shows, classroom rewards, and office events.' },
   { q: 'Can I customize the prizes?', a: 'Yes! Edit the list to include your own prizes, discount codes, or any other rewards.' },

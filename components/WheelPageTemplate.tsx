@@ -32,29 +32,29 @@ export default function WheelPageTemplate({ h1, defaultItems, description, faqs 
 
       <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col gap-12">
         <div className="text-center">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-3 leading-tight">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-3 leading-tight">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
               {h1}
             </span>
           </h1>
-          <p className="text-slate-400 text-lg max-w-xl mx-auto">{description}</p>
+          <p className="text-gray-600 text-lg max-w-xl mx-auto">{description}</p>
         </div>
 
         <WheelPageClient defaultItems={defaultItems} />
 
         <section className="max-w-2xl mx-auto w-full">
-          <h2 className="text-xl font-bold text-white mb-6 text-center">Frequently Asked Questions</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-6 text-center">Frequently Asked Questions</h2>
           <div className="flex flex-col gap-4">
             {faqs.map((faq, i) => (
               <div
                 key={i}
-                className="bg-slate-900/60 border border-slate-800 rounded-xl p-5"
+                className="bg-white border border-gray-100 shadow-sm rounded-xl p-5"
                 itemScope
                 itemType="https://schema.org/Question"
               >
-                <h3 className="text-white font-semibold mb-2" itemProp="name">{faq.q}</h3>
+                <h3 className="text-gray-900 font-semibold mb-2" itemProp="name">{faq.q}</h3>
                 <div itemScope itemType="https://schema.org/Answer" itemProp="acceptedAnswer">
-                  <p className="text-slate-400 text-sm leading-relaxed" itemProp="text">{faq.a}</p>
+                  <p className="text-gray-600 text-sm leading-relaxed" itemProp="text">{faq.a}</p>
                 </div>
               </div>
             ))}

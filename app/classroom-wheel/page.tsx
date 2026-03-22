@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: 'Free classroom wheel to pick a random student. Perfect for teachers who need a fair, fun way to call on students.',
 };
 
-const ITEMS = ['Student 1', 'Student 2', 'Student 3'];
+const ITEMS = ['Student 1', 'Student 2', 'Student 3', 'Student 4', 'Student 5'];
 const FAQS = [
   { q: 'How do teachers use this tool?', a: 'Add all your students\' names, spin, and the wheel picks one student at random to answer or participate.' },
   { q: 'Is it fair for students?', a: 'Yes, each student has an equal probability of being selected on every spin.' },

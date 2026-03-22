@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: 'Free truth or dare wheel. Spin to get a random Truth or Dare challenge. No signup needed.',
 };
 
-const ITEMS = ['Truth', 'Dare', 'Truth', 'Dare', 'Wild card'];
+const ITEMS = ['Truth', 'Dare', 'Truth', 'Dare', 'Wild card', 'Skip'];
 const FAQS = [
   { q: 'How do I use the truth or dare wheel?', a: 'Spin the wheel. If it lands on "Truth", the current player must answer an honest question. If "Dare", they must complete a challenge.' },
   { q: 'What is "Wild card"?', a: 'Wild card means the player can choose between Truth or Dare — or make up their own challenge.' },

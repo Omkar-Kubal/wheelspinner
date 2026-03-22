@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: 'Free wheel of names spinner. Add any names, spin, and get a random result. No signup needed.',
 };
 
-const ITEMS = ['Name 1', 'Name 2', 'Name 3', 'Name 4'];
+const ITEMS = ['Name 1', 'Name 2', 'Name 3', 'Name 4', 'Name 5'];
 const FAQS = [
   { q: 'What is a wheel of names?', a: 'A wheel of names is a random name selector that spins and lands on a name chosen at random.' },
   { q: 'How many names can I add?', a: 'There is no hard limit. Add as many names as you need.' },
