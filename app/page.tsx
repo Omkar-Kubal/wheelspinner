@@ -54,7 +54,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'WheelSpinner',
-  url: 'https://randomwheelpicker.io',
+  url: 'https://wheelspinner.site',
   description: 'Free online spin the wheel tool. Add names, spin, get a random result. No signup needed.',
   applicationCategory: 'UtilityApplication',
   operatingSystem: 'Any',
