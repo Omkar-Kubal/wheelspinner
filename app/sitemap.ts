@@ -2,25 +2,41 @@ import { MetadataRoute } from 'next';
 
 const BASE_URL = 'https://randomwheelpicker.io';
 
+const toolRoutes = [
+  '/random-name-picker',
+  '/yes-no-wheel',
+  '/wheel-of-names',
+  '/team-picker',
+  '/classroom-wheel',
+  '/prize-wheel',
+  '/truth-or-dare-wheel',
+];
+
+const staticRoutes = ['/about', '/privacy', '/terms'];
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = [
-    '',
-    '/random-name-picker',
-    '/yes-no-wheel',
-    '/wheel-of-names',
-    '/team-picker',
-    '/classroom-wheel',
-    '/prize-wheel',
-    '/truth-or-dare-wheel',
-    '/about',
-    '/privacy',
-    '/terms',
+  const homepage: MetadataRoute.Sitemap = [
+    {
+      url: BASE_URL,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1.0,
+    },
   ];
 
-  return routes.map(route => ({
+  const tools: MetadataRoute.Sitemap = toolRoutes.map((route) => ({
     url: `${BASE_URL}${route}`,
     lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: route === '' ? 1 : 0.8,
+    changeFrequency: 'weekly',
+    priority: 0.8,
   }));
+
+  const statics: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
+    url: `${BASE_URL}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.3,
+  }));
+
+  return [...homepage, ...tools, ...statics];
 }

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import confetti from 'canvas-confetti';
 import SpinWheel, { SpinWheelHandle } from '@/components/SpinWheel';
 import WheelControls from '@/components/WheelControls';
@@ -31,7 +32,10 @@ function getRelativeTime(date: Date): string {
   return `${diffMins} mins ago`;
 }
 
-export default function WheelPageClient({ defaultItems }: WheelPageClientProps) {
+// Inner component uses useSearchParams — must be wrapped in Suspense
+function WheelPageClientInner({ defaultItems }: WheelPageClientProps) {
+  const searchParams = useSearchParams();
+
   const [items, setItems] = useState<string[]>([]);
   const [winner, setWinner] = useState<string | null>(null);
   const [isSpinning, setIsSpinning] = useState(false);
@@ -83,12 +87,14 @@ export default function WheelPageClient({ defaultItems }: WheelPageClientProps) 
     } catch {}
   }, []);
 
-  // Load items (priority: URL params → page defaultItems → localStorage → global defaults)
+  // Load items — priority: URL params → page defaultItems → localStorage → global defaults
   useEffect(() => {
-    const rawSearch = window.location.search;
-    const match = rawSearch.match(/[?&]items=([^&]*)/);
-    if (match) {
-      const parsed = match[1].split(',').map((s) => decodeURIComponent(s).trim()).filter(Boolean);
+    const itemsParam = searchParams.get('items');
+    if (itemsParam) {
+      const parsed = itemsParam
+        .split(',')
+        .map((s) => decodeURIComponent(s).trim())
+        .filter(Boolean);
       if (parsed.length > 0) {
         setItems(parsed);
         return;
@@ -109,7 +115,7 @@ export default function WheelPageClient({ defaultItems }: WheelPageClientProps) 
       }
     } catch {}
     setItems(DEFAULT_ITEMS);
-  }, [defaultItems]);
+  }, [defaultItems, searchParams]);
 
   // Persist items to localStorage and URL
   useEffect(() => {
@@ -285,7 +291,6 @@ export default function WheelPageClient({ defaultItems }: WheelPageClientProps) 
     [items]
   );
 
-  // NamesPanel functions
   const handleAddName = useCallback((name: string) => {
     setItems((prev) => [...prev, name]);
   }, []);
@@ -386,19 +391,13 @@ export default function WheelPageClient({ defaultItems }: WheelPageClientProps) 
 
           {/* Winner history */}
           {winnerHistory.length > 0 && (
-            <div
-              className="w-full lg:w-80"
-              style={{ paddingTop: '4px' }}
-            >
+            <div className="w-full lg:w-80" style={{ paddingTop: '4px' }}>
               <p style={{ fontSize: '12px', color: '#888', margin: '0 0 8px 0' }}>
                 Recent Winners
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {[...winnerHistory].reverse().map((entry, i) => (
-                  <div
-                    key={i}
-                    style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-                  >
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span
                       style={{
                         width: '28px',
@@ -462,5 +461,14 @@ export default function WheelPageClient({ defaultItems }: WheelPageClientProps) 
         onHide={() => setToastVisible(false)}
       />
     </div>
+  );
+}
+
+// Suspense wrapper — required because WheelPageClientInner uses useSearchParams()
+export default function WheelPageClient({ defaultItems }: WheelPageClientProps) {
+  return (
+    <Suspense>
+      <WheelPageClientInner defaultItems={defaultItems} />
+    </Suspense>
   );
 }

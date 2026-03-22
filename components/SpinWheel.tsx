@@ -10,6 +10,7 @@ import {
 } from "react"
 import { WheelTheme, THEMES } from "@/lib/themes"
 import { playSpinSound } from "@/lib/sounds"
+import { incrementSpinCount, getSpinCount } from "@/lib/spinCounter"
 
 export interface SpinWheelHandle {
   saveImage: () => void
@@ -76,6 +77,9 @@ const SpinWheel = forwardRef<SpinWheelHandle, SpinWheelProps>(function SpinWheel
   const [showPulse, setShowPulse] = useState(false)
   const pulseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  // Global spin counter (Firestore)
+  const [totalSpins, setTotalSpins] = useState<number | null>(null)
+
   // Expose saveImage via ref
   useImperativeHandle(ref, () => ({
     saveImage: () => {
@@ -118,6 +122,13 @@ const SpinWheel = forwardRef<SpinWheelHandle, SpinWheelProps>(function SpinWheel
   useEffect(() => {
     const dur = parseInt(safeGetLS("wheelDuration", "5"))
     setSpinDuration(isNaN(dur) ? 5 : Math.min(10, Math.max(2, dur)))
+  }, [])
+
+  // Fetch global spin count on mount
+  useEffect(() => {
+    getSpinCount().then((count) => {
+      if (count > 0) setTotalSpins(count)
+    })
   }, [])
 
   // Pointer wobble — only once, ever
@@ -365,6 +376,11 @@ const SpinWheel = forwardRef<SpinWheelHandle, SpinWheelProps>(function SpinWheel
     setShowPulse(false)
     hasEverSpun = true
 
+    // Increment global counter (fire-and-forget)
+    incrementSpinCount().then(() => {
+      setTotalSpins((prev) => (prev !== null ? prev + 1 : null))
+    })
+
     setIsSpinning(true)
 
     if (!isMuted) {
@@ -456,6 +472,13 @@ const SpinWheel = forwardRef<SpinWheelHandle, SpinWheelProps>(function SpinWheel
       {items.length > 0 && (
         <p style={{ fontSize: "13px", color: "#888", margin: 0, textAlign: "center" }}>
           {items.length} items · {(100 / items.length).toFixed(1)}% chance each
+        </p>
+      )}
+
+      {/* Global spin counter */}
+      {totalSpins !== null && (
+        <p style={{ fontSize: "12px", color: "#bbb", margin: 0, textAlign: "center" }}>
+          Spun {totalSpins.toLocaleString()} times
         </p>
       )}
 

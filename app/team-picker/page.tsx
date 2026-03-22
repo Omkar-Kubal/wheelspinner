@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: 'Use the random team picker wheel to split players into fair, random teams. Free with no signup.',
 };
 
-const ITEMS = ['Player 1', 'Player 2', 'Player 3', 'Player 4'];
+const ITEMS = ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6'];
 const FAQS = [
   { q: 'How do I use this to pick teams?', a: 'Add all player names, then spin repeatedly. The first half of results go to Team A, the rest to Team B.' },
   { q: 'Can I pick more than two teams?', a: 'Yes! Spin and assign each result to your teams in order.' },

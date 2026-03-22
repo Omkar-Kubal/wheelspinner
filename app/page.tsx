@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import WheelPageClient from '@/components/WheelPageClient';
+import AdSlot from '@/components/AdSlot';
 
 export const metadata: Metadata = {
   title: 'Spin the Wheel | Free Random Picker',
@@ -77,6 +78,9 @@ export default function HomePage() {
 
         {/* Wheel + Controls */}
         <WheelPageClient />
+
+        {/* Ad below wheel */}
+        <AdSlot slot="1234567890" format="rectangle" className="w-full max-w-xl mx-auto" />
 
         {/* How it works description (SEO) */}
         <section className="max-w-2xl mx-auto text-center">
