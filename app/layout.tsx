@@ -26,7 +26,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body 
+      <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJKL5FDJWB"></script>
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-ZJKL5FDJWB');
+        ` }} />
+      </head>
+      <body
         className={`${inter.className} text-gray-900 min-h-screen flex flex-col`}
         style={{
           background: "radial-gradient(circle at center, #ffffff 0%, #f0f4ff 100%)",
