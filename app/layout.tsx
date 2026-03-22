@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: '%s | WheelSpinner',
   },
   description: 'Free spin the wheel tool. Add names, spin, get a random result. No signup needed. Share your wheel with a link.',
-  metadataBase: new URL('https://randomwheelpicker.io'),
+  metadataBase: new URL('https://wheelspinner.site'),
   openGraph: {
     siteName: 'WheelSpinner',
     type: 'website',
