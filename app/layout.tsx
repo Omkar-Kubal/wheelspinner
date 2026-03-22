@@ -27,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6341544256514308" crossOrigin="anonymous"></script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJKL5FDJWB"></script>
         <script dangerouslySetInnerHTML={{ __html: `
           window.dataLayer = window.dataLayer || [];
