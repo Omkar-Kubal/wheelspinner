@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npm run:*)",
-      "Bash(ls D:/wheelspinner/.env*)"
+      "Bash(ls D:/wheelspinner/.env*)",
+      "Bash(Get-Content \"C:\\\\Users\\\\omkar\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\D--wheelspinner\\\\442a22ae-1fea-4d3d-9cdd-042ed88cad8d\\\\tasks\\\\bfk386tj2.output\")"
     ]
   }
 }

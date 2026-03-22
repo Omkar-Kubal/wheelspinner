@@ -14,7 +14,10 @@ const firebaseConfig = {
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-// Analytics is only supported in browser environments
-export const analytics = isSupported().then((yes) => (yes ? getAnalytics(app) : null));
+// Analytics — only initialize in browser to avoid hanging during SSR/build
+export const analytics =
+  typeof window !== 'undefined'
+    ? isSupported().then((yes) => (yes ? getAnalytics(app) : null))
+    : Promise.resolve(null);
 
 export default app;

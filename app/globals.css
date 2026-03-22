@@ -56,3 +56,17 @@
   from { opacity: 0; transform: translateY(-8px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Use-case cards hover */
+.use-case-card {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.use-case-card:hover {
+  border-color: #6C5CE7 !important;
+  box-shadow: 0 4px 16px rgba(108,92,231,0.08);
+}
+
+/* FAQ accordion */
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] .faq-chevron { transform: rotate(180deg); }
