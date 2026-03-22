@@ -64,13 +64,13 @@ export default function HomePage() {
       <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col gap-12">
         {/* Hero */}
         <div className="text-center">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-3 leading-tight">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-3 leading-tight">
             Spin the Wheel{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
               — Free Random Picker
             </span>
           </h1>
-          <p className="text-slate-400 text-lg max-w-xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-xl mx-auto">
             Add any items, spin the wheel, and let fate decide. Perfect for picking names, teams, prizes, and more.
           </p>
         </div>
@@ -80,8 +80,8 @@ export default function HomePage() {
 
         {/* How it works description (SEO) */}
         <section className="max-w-2xl mx-auto text-center">
-          <h2 className="text-xl font-bold text-white mb-3">What is Spin the Wheel?</h2>
-          <p className="text-slate-400 leading-relaxed">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">What is Spin the Wheel?</h2>
+          <p className="text-gray-600 leading-relaxed">
             WheelSpinner is a free online spin-the-wheel tool that lets you pick a random item from any list.
             Add names, options, prizes, or anything else — then spin for a fair, random result. No software to install,
             no account required. Share your custom wheel with a unique link, or embed it on your own website.
@@ -90,17 +90,17 @@ export default function HomePage() {
 
         {/* FAQ */}
         <section className="max-w-2xl mx-auto w-full">
-          <h2 className="text-xl font-bold text-white mb-6 text-center">Frequently Asked Questions</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-6 text-center">Frequently Asked Questions</h2>
           <div className="flex flex-col gap-4">
             {faqSchema.mainEntity.map((item, i) => (
               <div
                 key={i}
-                className="bg-slate-900/60 border border-slate-800 rounded-xl p-5"
+                className="bg-white border border-gray-100 shadow-sm rounded-xl p-5"
                 itemScope
                 itemType="https://schema.org/Question"
               >
                 <h3
-                  className="text-white font-semibold mb-2"
+                  className="text-gray-900 font-semibold mb-2"
                   itemProp="name"
                 >
                   {item.name}
@@ -110,7 +110,7 @@ export default function HomePage() {
                   itemType="https://schema.org/Answer"
                   itemProp="acceptedAnswer"
                 >
-                  <p className="text-slate-400 text-sm leading-relaxed" itemProp="text">
+                  <p className="text-gray-600 text-sm leading-relaxed" itemProp="text">
                     {item.acceptedAnswer.text}
                   </p>
                 </div>

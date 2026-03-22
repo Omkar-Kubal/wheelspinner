@@ -26,7 +26,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-slate-950 text-white min-h-screen flex flex-col`}>
+      <body 
+        className={`${inter.className} text-gray-900 min-h-screen flex flex-col`}
+        style={{
+          background: "radial-gradient(circle at center, #ffffff 0%, #f0f4ff 100%)",
+        }}
+      >
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
